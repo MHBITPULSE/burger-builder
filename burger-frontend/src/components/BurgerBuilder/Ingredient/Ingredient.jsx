@@ -7,7 +7,6 @@ import Cheese from '../../../assets/images/cheese.png'
 
 const Ingredient = ({ type }) => {
       let ingredient = null;
-      console.log(type)
 
       switch (type) {
             case 'bread-bottom':
