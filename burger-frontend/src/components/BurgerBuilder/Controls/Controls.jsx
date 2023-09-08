@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, CardFooter, CardHeader } from 'reactstrap'
+import { Button, Card, CardBody, CardFooter, CardHeader } from 'reactstrap'
 
 const controls = [
     { label: 'Salad', type: 'salad' },
@@ -17,7 +17,7 @@ const BuildControl = ({ label, type, addItem, removeItem }) => {
     )
 }
 
-const Controls = ({ addItem, removeItem, totalPrice }) => {
+const Controls = ({ addItem, removeItem, totalPrice, openModal, purchasable }) => {
     return (
         <div className='container ml-md-5 text-center'>
             <Card className='mt-6 mb-6 text-center'>
@@ -30,6 +30,7 @@ const Controls = ({ addItem, removeItem, totalPrice }) => {
                     })}
                 </CardBody>
                 <CardFooter><h5>Price:  {totalPrice} BDT</h5></CardFooter>
+                <Button disabled={!purchasable} onClick={openModal}>Order Now</Button>
             </Card>
         </div>
     )
