@@ -72,7 +72,8 @@ export const burgerSlice = createSlice({
                         })
                   }
                   state.orders = orders;
-                  state.orderLoading = false
+                  state.orderLoading = false;
+                  state.orderErr = false
             },
             orderLoadFailed: (state) => {
                   state.orderLoading = false
@@ -83,8 +84,11 @@ export const burgerSlice = createSlice({
 
 export const { addIngredient, removeIngredient, resetIngredient, updatePurchasable, loadOrders, orderLoadFailed } = burgerSlice.actions;
 
-export const fetchOrders = () => async (dispatch) => {
-      await axios.get("https://burger-builder-9fc26-default-rtdb.firebaseio.com/orders.json")
+export const fetchOrders = (token, userId) => async (dispatch) => {
+
+      const queryParams = '&orderBy="userId"&equalTo="' + userId + '"'
+
+      await axios.get('https://burger-builder-9fc26-default-rtdb.firebaseio.com/orders.json?auth=' + token + queryParams)
             .then(response => dispatch(loadOrders(response.data)))
             .catch(err => dispatch(orderLoadFailed()))
 

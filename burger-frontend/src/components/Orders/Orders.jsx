@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { fetchOrders, selectOrders, selectOrderLoading, selectOrderErr } from '../../redux/burgerSlice'
+import { selectToken, selectUserId } from '../../redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Order from './Order/Order';
 import Spinner from '../spinner/Spinner';
@@ -9,10 +10,12 @@ const Orders = () => {
       const orders = useSelector(selectOrders);
       const orderLoading = useSelector(selectOrderLoading)
       const orderErr = useSelector(selectOrderErr)
+      const token = useSelector(selectToken);
+      const userId = useSelector(selectUserId);
       const dispatch = useDispatch();
 
       useEffect(() => {
-            dispatch(fetchOrders())
+            dispatch(fetchOrders(token, userId))
       }, [])
       useEffect(() => {
             console.log(orders)

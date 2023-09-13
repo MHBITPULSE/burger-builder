@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Modal, ModalBody } from 'reactstrap'
 import { selectIngredients, selectTotalPrice } from '../../../redux/burgerSlice'
+import { selectUserId, selectToken } from '../../../redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import Spinner from '../../spinner/Spinner'
@@ -11,6 +12,8 @@ import { resetIngredient } from '../../../redux/burgerSlice'
 const Checkout = (props) => {
       const ingredients = useSelector(selectIngredients)
       const totalPrice = useSelector(selectTotalPrice)
+      const userId = useSelector(selectUserId)
+      const token = useSelector(selectToken)
       const dispatch = useDispatch();
 
       const [isLoading, setIsLoading] = useState(false);
@@ -38,10 +41,11 @@ const Checkout = (props) => {
                   ingredients: ingredients,
                   customer: values,
                   price: totalPrice,
-                  ordertime: new Date()
+                  ordertime: new Date(),
+                  userId: userId
             }
 
-            axios.post('https://burger-builder-9fc26-default-rtdb.firebaseio.com/orders.json', order)
+            axios.post('https://burger-builder-9fc26-default-rtdb.firebaseio.com/orders.json?auth=' + token, order)
                   .then(response => {
                         if (response.status === 200) {
                               setIsLoading(false)

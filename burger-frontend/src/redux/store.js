@@ -5,9 +5,11 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import burgerReducer from './burgerSlice';
+import authReducer from './authSlice'
 
 export default configureStore({
       reducer: {
             burger: burgerReducer,
+            auth: authReducer
       },
 });
