@@ -45,9 +45,34 @@ const Checkout = (props) => {
                   userId: userId
             }
 
-            axios.post('https://burger-builder-9fc26-default-rtdb.firebaseio.com/orders.json?auth=' + token, order)
+            // axios.post('https://burger-builder-9fc26-default-rtdb.firebaseio.com/orders.json?auth=' + token, order)
+            //       .then(response => {
+            //             if (response.status === 200) {
+            //                   setIsLoading(false)
+            //                   setIsModalOpen(true)
+            //                   setModalMsg("Order Placed Successfully")
+            //                   dispatch(resetIngredient())
+            //             }
+            //             else {
+            //                   setIsLoading(false)
+            //                   setIsModalOpen(true)
+            //                   setModalMsg("Something Went Wrong")
+            //             }
+            //       })
+            //       .catch(err => {
+            //             console.log(err)
+            //             setIsLoading(false)
+            //             setIsModalOpen(true)
+            //             setModalMsg("Something Went Wrong")
+            //       })
+
+            axios.post('http://localhost:3001/order/', order, {
+                  headers: {
+                        Authorization: `Bearer ${token}`
+                  }
+            })
                   .then(response => {
-                        if (response.status === 200) {
+                        if (response.status === 201) {
                               setIsLoading(false)
                               setIsModalOpen(true)
                               setModalMsg("Order Placed Successfully")
@@ -65,7 +90,6 @@ const Checkout = (props) => {
                         setIsModalOpen(true)
                         setModalMsg("Something Went Wrong")
                   })
-            console.log(order)
       }
 
       let form = (

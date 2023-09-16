@@ -9,7 +9,7 @@ const Order = ({ order }) => {
       })
       return (
             <div className='p-2 m-2 border-2 border-neutral-800 shadow-md rounded-lg'>
-                  <p>Order Number: {order.id}</p>
+                  <p>Order Number: {order._id}</p>
                   <p>Delivery Address: {order.customer.deliveryAddress}</p>
                   <hr />
                   {ingredientSummary}
