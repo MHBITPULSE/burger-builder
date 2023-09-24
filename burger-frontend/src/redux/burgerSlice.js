@@ -92,7 +92,7 @@ export const fetchOrders = (token, userId) => async (dispatch) => {
       //       .then(response => dispatch(loadOrders(response.data)))
       //       .catch(err => dispatch(orderLoadFailed()))
 
-      await axios.get('http://localhost:3001/order/', {
+      await axios.get('http://localhost:3001/api/order/', {
             headers: {
                   Authorization: `Bearer ${token}`
             }

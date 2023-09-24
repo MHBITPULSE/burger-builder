@@ -49,10 +49,11 @@ export const selectAuthLoading = (state) => state.auth.authLoading
 
 export const selectAuthFailedMsg = (state) => state.auth.authFailedMsg
 
-export const auth = (email, password, isLogin) => async (dispatch) => {
+export const auth = (name, email, password, isLogin) => async (dispatch) => {
       dispatch(authFailed(null))
       dispatch(authLoading(true))
       const authData = {
+            name: name,
             email: email,
             password: password,
       }
@@ -89,9 +90,9 @@ export const auth = (email, password, isLogin) => async (dispatch) => {
 
       // Express Code
       let authUrl = isLogin ?
-            "http://localhost:3001/user/auth"
+            "http://localhost:3001/api/user/auth"
             :
-            "http://localhost:3001/user/"
+            "http://localhost:3001/api/user/"
       await axios.post(authUrl, authData)
             .then(response => {
                   dispatch(authLoading(false))
@@ -109,6 +110,7 @@ export const auth = (email, password, isLogin) => async (dispatch) => {
             .catch(err => {
                   dispatch(authLoading(false))
                   dispatch(authFailed(err.response.data))
+                  console.log(err)
             }
             )
 }

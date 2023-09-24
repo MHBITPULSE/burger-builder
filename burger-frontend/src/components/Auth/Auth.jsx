@@ -24,7 +24,7 @@ const Auth = () => {
       } else {
             form = <Formik
                   initialValues={{
-
+                        name: "",
                         email: "",
                         password: "",
                         passwordConfirm: "",
@@ -32,7 +32,7 @@ const Auth = () => {
                   }
                   onSubmit={
                         (values) => {
-                              dispatch(auth(values.email, values.password, isLogin));
+                              dispatch(auth(values.name, values.email, values.password, isLogin));
                               console.log("token: ", token)
                         }
                   }
@@ -64,6 +64,11 @@ const Auth = () => {
                               <div className='p-2 border-2 rounded-lg'>
                                     <button className='p-2 w-full text-white bg-rose-600' onClick={() => setIsLogin(!isLogin)}>Switch to {isLogin ? "Sign Up" : "Sign In"}</button>
                                     <form onSubmit={handleSubmit}>
+                                          {!isLogin && <><input name="name"
+                                                value={values.name}
+                                                onChange={handleChange} placeholder='Enter Your Name' className='form-control' />
+                                                <span className='p-2 text-red-700'>{errors.passwordConfirm}</span>
+                                                <br /></>}
                                           <input name="email" placeholder='Enter Your Email.'
                                                 value={values.email}
                                                 onChange={handleChange} className='form-control' />

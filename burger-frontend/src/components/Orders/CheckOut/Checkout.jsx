@@ -66,7 +66,7 @@ const Checkout = (props) => {
             //             setModalMsg("Something Went Wrong")
             //       })
 
-            axios.post('http://localhost:3001/order/', order, {
+            axios.post('http://localhost:3001/api/order/', order, {
                   headers: {
                         Authorization: `Bearer ${token}`
                   }

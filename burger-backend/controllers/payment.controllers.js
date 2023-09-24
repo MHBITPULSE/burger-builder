@@ -1,7 +1,7 @@
 const PaymentSession = require('ssl-commerz-node').PaymentSession
 
 const { CartItem, CartItemSchema } = require('../models/cartItem.model')
-const { Order } = require('../models/order.model')
+const { Order } = require('../models/order')
 const { Payment } = require('../models/payment.model')
 
 const { Profile } = require('../models/profile.model')

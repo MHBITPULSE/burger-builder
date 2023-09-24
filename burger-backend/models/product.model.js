@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 
-const orderSchema = Schema({
+const productSchema = Schema({
       userId: Schema.Types.ObjectId,
       ingredients: [{ type: { type: String }, amount: Number }],
       customer: {
@@ -10,6 +10,6 @@ const orderSchema = Schema({
       },
       price: Number,
       orderTime: { type: Date, default: Date.now }
-})
+}, { timestamps: true })
 
-module.exports.Order = model("Order", orderSchema)
+module.exports.Product = model("Product", orderSchema)

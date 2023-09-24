@@ -11,7 +11,7 @@ const app = require('./app')
 
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URL_ATLAS, {
+mongoose.connect(process.env.MONGODB_SERVER, {
       useNewURLParser: true,
 })
       .then(() => console.log("Connected to MongoDB"))

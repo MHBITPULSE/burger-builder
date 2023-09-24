@@ -6,11 +6,13 @@ const authorize = require('../middlewares/authorize')
 const router = express.Router()
 
 const newOrder = async (req, res) => {
+      console.log(req.body)
       const order = new Order(req.body);
       try {
             await order.save();
             return res.status(201).send("Order Placed Successfully");
       } catch (err) {
+            console.log(err)
             return res.status(400).send('Somethimg went wrong!')
       }
 }
