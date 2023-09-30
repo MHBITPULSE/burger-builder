@@ -1,10 +1,10 @@
 const PaymentSession = require('ssl-commerz-node').PaymentSession
 
-const { CartItem, CartItemSchema } = require('../models/cartItem.model')
+//const { CartItem, CartItemSchema } = require('../models/cartItem.model')
 const { Order } = require('../models/order')
-const { Payment } = require('../models/payment.model')
+const { Payment } = require('../models/payment')
 
-const { Profile } = require('../models/profile.model')
+//const { Profile } = require('../models/profile.model')
 
 const path = require('path')
 
@@ -22,14 +22,15 @@ module.exports.ipn = async (req, res) => {
 }
 
 module.exports.initPayment = async (req, res) => {
+      console.log(req.query)
 
       const userId = req.user._id;
       console.log(userId)
-      const cartItems = await CartItem.find({ user: userId })
+      //const cartItems = await CartItem.find({ user: userId })
 
-      const profile = await Profile.findOne({ user: userId })
+      const order = await Order.findOne({ _id: req.query.id })
 
-      console.log(profile)
+      //console.log(profile)
 
       const { phone,
             address1,
@@ -37,15 +38,13 @@ module.exports.initPayment = async (req, res) => {
             city,
             state,
             postcode,
-            country } = profile
+            country } = order.customer
 
-      const total_amount = cartItems.map(item => item.count * item.price)
-            .reduce((a, b) => a + b, 0)
+      const total_amount = order.price
 
-      const total_item = cartItems.map(item => item.count)
-            .reduce((a, b) => a + b, 0)
+      const total_item = 1
 
-      const tran_id = '_' + Math.random().toString(36).substring(2, 9) + (new Date()).getTime();
+      const tran_id = order.transaction_id;
 
 
       const payment = new PaymentSession(true, process.env.STORE_ID, process.env.STORE_PASSWORD)
@@ -102,12 +101,10 @@ module.exports.initPayment = async (req, res) => {
 
       await payment.paymentInit()
             .then(async (response) => {
-                  const order = new Order({ cartItems: cartItems, transaction_id: tran_id, address: profile, user: userId });
                   if (response.status === 'SUCCESS') {
                         order.sessionKey = response['sessionkey']
                         await order.save()
                   }
-                  console.log(response);
                   return res.status(200).send(response);
             })
             .catch(err => console.log(err));

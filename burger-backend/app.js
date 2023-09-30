@@ -8,9 +8,6 @@ app.use(cors());
 
 app.use(express.json());
 
-<<<<<<< HEAD
-require('./middlewares/routes')(app)
-=======
 
 const userRouter = require('./routers/user.route')
 
@@ -19,7 +16,14 @@ app.use('/user', userRouter)
 const orderRouter = require('./routers/order.routes')
 
 app.use('/order', orderRouter)
->>>>>>> parent of fb85971 (Start Backend Payment Integration)
+
+const paymentRouter = require('./routers/payment.routes')
+
+app.use('/payment', paymentRouter)
+
+const profileRouter = require('./routers/profile.routes')
+
+app.use('/profile', profileRouter)
 
 module.exports = app;
 

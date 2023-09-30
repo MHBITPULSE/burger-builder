@@ -5,14 +5,10 @@ const Joi = require('joi')
 const { Schema, model } = require('mongoose')
 
 const userSchema = Schema({
-<<<<<<< HEAD:burger-backend/models/user.model.js
       name: {
             type: String,
-            minLength: 3,
-            maxLength: 255,
+            required: true,
       },
-=======
->>>>>>> parent of fb85971 (Start Backend Payment Integration):burger-backend/models/user.js
       email: {
             type: String,
             required: true,
@@ -30,7 +26,7 @@ const userSchema = Schema({
 
 userSchema.methods.generateJWT = function () {
       const token = jwt.sign(
-            { _id: this._id, email: this.email },
+            { _id: this._id, email: this.email, name: this.name },
             process.env.JWT_SECRET_KEY,
             {
                   expiresIn: "3h"
@@ -40,6 +36,7 @@ userSchema.methods.generateJWT = function () {
 
 const validateuser = user => {
       const schema = Joi.object({
+            name: Joi.string().min(3).max(255).required(),
             email: Joi.string().min(5).max(255).required().email(),
             password: Joi.string().min(5).max(255).required()
       });
